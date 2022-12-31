@@ -47,9 +47,21 @@ const displayController = (() => {
     listenForClick();
   }
 
+  const displayOutcome = (outcome) => {
+    const outcomeElement = document.getElementById('outcome');
+    if (outcome === 'T') {
+      outcomeElement.textContent = "Game over. It's a tie!";
+    } else if (outcome === 'X') {
+      outcomeElement.textContent = "Player 1 wins!";
+    } else if (outcome === 'O') {
+      outcomeElement.textContent = "Player 2 wins!";
+    }
+  }
+
   return {
     refreshGrid,
     stopListenForClick,
+    displayOutcome,
   };
 })();
 
@@ -126,11 +138,7 @@ const gameLogic = (() => {
   gameOutcome = checkIfGameEnd();
   if (gameOutcome !== 'C') {
     displayController.stopListenForClick();
-    if (gameOutcome === 'T') {
-      console.log("It's a tie!");
-    } else {
-      console.log(gameOutcome);
-    }
+    displayController.displayOutcome(gameOutcome);
   }
  } 
 
