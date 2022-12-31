@@ -1,16 +1,18 @@
 const gameBoard = (() => {
-  const gameArr = Array(9).fill('');
+  let gameArr = Array(9).fill('');
 
   const gameArrLength = () => { return gameArr.length };
   const accessElement = (i) => { return gameArr[i] };
   const changeElement = (idx, marker) => { gameArr[idx] = marker };
   const includes = (ele) => { return gameArr.includes(ele)};
+  const resetArr = () => { gameArr = Array(9).fill('') };
 
   return {
     gameArrLength,
     accessElement,
     changeElement,
     includes,
+    resetArr,
   };
 })();
 
@@ -34,6 +36,9 @@ const displayController = (() => {
   const listenForClick = () => {
     const cellArr = document.querySelectorAll('.cell');
     cellArr.forEach((cell) => cell.addEventListener('click', gameLogic.handleClick));
+
+    const resetBtn = document.getElementById('reset-btn');
+    resetBtn.addEventListener('click', gameLogic.resetGame);
   };
 
   const stopListenForClick = () => {
@@ -58,10 +63,15 @@ const displayController = (() => {
     }
   }
 
+  const resetOutcome = () => {
+    document.getElementById('outcome').textContent = "Game in progres...";
+  }
+
   return {
     refreshGrid,
     stopListenForClick,
     displayOutcome,
+    resetOutcome,
   };
 })();
 
@@ -153,10 +163,17 @@ const gameLogic = (() => {
   }
  } 
 
+ const resetGame = () => {
+  gameBoard.resetArr();
+  displayController.resetOutcome();
+  displayController.refreshGrid();
+ }
+
  return {
   getPlayerNames,
   changeTurn,
-  handleClick
+  handleClick,
+  resetGame,
  }
 
 })();
