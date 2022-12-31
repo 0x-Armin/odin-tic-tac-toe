@@ -47,14 +47,14 @@ const displayController = (() => {
     listenForClick();
   }
 
-  const displayOutcome = (outcome) => {
+  const displayOutcome = (outcome, p1, p2) => {
     const outcomeElement = document.getElementById('outcome');
     if (outcome === 'T') {
       outcomeElement.textContent = "Game over. It's a tie!";
     } else if (outcome === 'X') {
-      outcomeElement.textContent = "Player 1 wins!";
+      outcomeElement.textContent = `${p1.getName()} wins!`;
     } else if (outcome === 'O') {
-      outcomeElement.textContent = "Player 2 wins!";
+      outcomeElement.textContent = `${p2.getName()} wins!`;
     }
   }
 
@@ -72,6 +72,17 @@ const gameLogic = (() => {
   */
  let whichPlayer = 0;
  const playerMarker = ['X', 'O'];
+
+ let p1 = null;
+ let p2 = null;
+
+ const getPlayerNames = () => {
+  let p1Name = prompt("Player 1, please enter your name.", "Alpha Buddha");
+  let p2Name = prompt("Player 2, please enter your name", "Beta Sterra");
+
+  p1 = player(p1Name);
+  p2 = player(p2Name);
+ }
 
  const changeTurn = () => {
   whichPlayer = 1 - whichPlayer;
@@ -138,11 +149,12 @@ const gameLogic = (() => {
   gameOutcome = checkIfGameEnd();
   if (gameOutcome !== 'C') {
     displayController.stopListenForClick();
-    displayController.displayOutcome(gameOutcome);
+    displayController.displayOutcome(gameOutcome, p1, p2);
   }
  } 
 
  return {
+  getPlayerNames,
   changeTurn,
   handleClick
  }
@@ -157,4 +169,5 @@ const player = (name) => {
   }
 };
 
+gameLogic.getPlayerNames();
 displayController.refreshGrid();
