@@ -64,7 +64,7 @@ const displayController = (() => {
   }
 
   const resetOutcome = () => {
-    document.getElementById('outcome').textContent = "Game in progres...";
+    document.getElementById('outcome').textContent = "Game in progress...";
   }
 
   return {
