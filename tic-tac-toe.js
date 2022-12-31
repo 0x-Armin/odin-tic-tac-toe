@@ -10,11 +10,24 @@ const gameBoard = (() => {
   };
 })();
 
-const gameGrid = document.getElementById('game-grid');
-for (let i = 0; i < gameBoard.gameArrLength(); i++) {
-  console.log('running...');
-  const cell = document.createElement('div');
-  cell.innerHTML = gameBoard.accessElement(i);
-  cell.className = 'cell';
-  gameGrid.appendChild(cell);
-}
+const displayController = (() => {
+  const gameGrid = document.getElementById('game-grid');
+
+  const displayGrid = () => {
+    for (let i = 0; i < gameBoard.gameArrLength(); i++) {
+      console.log('running...');
+      const cell = document.createElement('div');
+      cell.innerHTML = gameBoard.accessElement(i);
+      cell.className = 'cell';
+      gameGrid.appendChild(cell);
+    }
+  }
+
+  return {
+    displayGrid,
+  };
+})();
+
+displayController.displayGrid();
+
+
